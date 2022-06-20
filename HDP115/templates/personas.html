@@ -1,0 +1,105 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block head %} 
+{% endblock %}
+
+
+
+{% block content %} 
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="form-panel panel panel-default">
+                
+                <div class="panel-heading">
+                    <h3 class="panel-title">Buscar Personas</h3>
+                </div>
+                <form class="d-flex" role="search" method="GET">
+                    <input class="form-control me-2" type="search" name="buscar" value="" autocomplete='off' placeholder="Buscar..." aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Buscar</button>
+                </form>
+                <div class="panel-body">
+                    
+                    <form id = "formulario" role="form" action="." method="POST">
+                        {% csrf_token %}
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <table class="table">
+                                        <thead>
+                                            <th>Documento</th>
+                                            <th>Nombre</th>
+                                            <th>Apellido</th>
+                                            <th>OPCIONES</th>
+                                        </thead>
+                                        <tbody>
+
+                                            {% for p in personas%}
+                                            <tr>
+                                                {% if p.pasaporte == Null %}
+                                                    <td>{{p.dui}}</td>
+                                                {% endif %}
+                                                {% if p.dui == Null %}
+                                                    <td>{{p.pasaporte}}</td>
+                                                {% endif %}
+                                                <td>{{p.nombre}}</td>
+                                                <td>{{p.apellido}}</td> 
+                                                <td><a class="btn btn-secondary"href="{% url 'agregarAlarma' p.idPersona %}">Agregar Alerta</a></td> 
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <a class="btn btn-danger btn-block" href="{% url 'home' %}"> Cancelar </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+
+{% block scripts %}
+<!-- DataTables JavaScript -->
+<script src="{% static 'js/dataTables/jquery.dataTables.min.js'%}"></script>
+<script src="{% static 'js/dataTables/dataTables.bootstrap.min.js'%}"></script>
+<script type= application/javascript>
+    {%if messages%}
+        var msg = '';
+        var msg1 = '';
+        {%for message in messages%}
+        {% if 'error' in message.tags %}
+            msg += '{{ message }}\n';
+          {% endif %}
+        {% endfor %}
+        if(msg != ''){
+        Swal.fire({
+            icon: 'error',
+            text: msg,
+            //footer: '<a href="">Why do I have this issue?</a>'
+          })
+        }
+        {%for message in messages%}
+        {% if 'success' in message.tags %}
+            msg1 += '{{ message }}\n';
+          {% endif %}
+        {% endfor %}
+        if(msg1 != ''){
+            Swal.fire({
+                icon: 'success',
+                text: msg1,
+              })
+        }
+    {% endif %} 
+  </script>
+{% endblock %}
