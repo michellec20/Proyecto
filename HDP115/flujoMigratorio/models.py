@@ -9,12 +9,12 @@ tipo_Documento=[
     (2, 'Pasaporte')
 ]
 estado_actual=[
-    (1, 'Fuera del Paìs'),
-    (2, 'En el Pais')
+    (1, 'Fuera del pais'),
+    (2, 'En el pais')
 ]
 tipo_alarma = [
-    (1, 'Alarma 1'),
-    (2, 'Alarma 2')
+    (1, 'Alerta 1'),
+    (2, 'Alerta 2')
 ]
 class persona(models.Model):
     idPersona = models.AutoField(primary_key=True)

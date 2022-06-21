@@ -38,7 +38,7 @@ class registrarPersona(GroupRequiredMixin, CreateView):
         
         try:
             form.save()
-            messages.success(self.request, 'La Persona fue registrada con exito')
+            messages.success(self.request, 'La persona fue registrada con exito')
         except Exception:
             personas.delete()
             messages.success(self.request, 'Ocurrio un error al registrar la persona')
@@ -91,7 +91,7 @@ class entradaPersona(GroupRequiredMixin, CreateView):
             
             try:
                 alarma = Alarma.objects.get(persona_id = per.idPersona)
-                messages.error(self.request, 'Esta persona contiene una alerta, no puede entrar al paìs')
+                messages.error(self.request, 'Esta persona contiene una alerta, no puede entrar al pais.')
                 return HttpResponseRedirect(self.get_url_redirect()) 
             except Exception:
                 messages.success(self.request, 'No contiene Alerta, ')
@@ -185,10 +185,10 @@ class agregarAlarma(GroupRequiredMixin, CreateView):
             per = persona.objects.get(idPersona = idp)
             alarma.persona = per
             alarma.save()
-            messages.success(self.request, 'Alarma registrada con éxito')
+            messages.success(self.request, 'Alerta registrada con éxito')
         except Exception:
             alarma.delete()
-            messages.error(self.request, 'Ocurrió un error al guardar la Alarma')
+            messages.error(self.request, 'Ocurrió un error al guardar la Alerta')
         return HttpResponseRedirect(self.get_url_redirect()) 
 
 class indexSalirPersona(GroupRequiredMixin, ListView):
@@ -261,7 +261,7 @@ class salidaPersona(GroupRequiredMixin, CreateView):
                 messages.error(self.request, 'Esta persona contiene una alerta, no puede salir del paìs')
                 return HttpResponseRedirect(self.get_url_redirect()) 
             except Exception:
-                messages.success(self.request, 'No contiene Alerta, ')
+                messages.success(self.request, 'No contiene Alertas. ')
             per.estado = 1
             salida.persona = per
             salida.save()
