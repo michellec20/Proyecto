@@ -266,7 +266,7 @@ class salidaPersona(GroupRequiredMixin, CreateView):
             salida.persona = per
             salida.save()
             per.save()
-            messages.success(self.request, 'Persona registrada con éxito')
+            messages.success(self.request, 'Persona registradas con éxito')
         except Exception:
             salida.delete()
             messages.error(self.request, 'Ocurrió un error al guardar la salida de la persona al pais')
